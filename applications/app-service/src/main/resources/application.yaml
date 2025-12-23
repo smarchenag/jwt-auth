@@ -1,0 +1,35 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: "jwt-auth"
+  devtools:
+    add-properties: false
+  h2:
+    console:
+      enabled: true
+      path: "/h2"
+  profiles:
+    include: null
+jwt:
+  secret: "ad1d629330be25e82e5505ae20123897aaf3d2982693c999f041e8c978d113a3"
+  expiration: 86400000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,prometheus"
+  endpoint:
+    health:
+      probes:
+        enabled: true
+adapters:
+  r2dbc:
+    host: "localhost"
+    port: 5435
+    database: "auth_db"
+    schema: "public"
+    username: "admin"
+    password: "admin123"
+cors:
+  allowed-origins: "http://localhost:4200,http://localhost:8080"

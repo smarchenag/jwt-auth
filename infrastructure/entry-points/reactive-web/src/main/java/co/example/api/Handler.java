@@ -21,9 +21,11 @@ public class Handler {
 
     public Mono<ServerResponse> loginUsuario(ServerRequest serverRequest) {
         return serverRequest.bodyToMono(LoginRequest.class)
-                .flatMap(loginRequest -> autenticacionUseCase.autenticarUsuario(loginRequest.username(), loginRequest.password()))
-                .flatMap(token -> ServerResponse.ok().bodyValue(token))
-                .onErrorResume(e -> ServerResponse.badRequest().bodyValue(e.getMessage()));
+                .flatMap(loginRequest -> autenticacionUseCase.autenticarUsuario(
+                    loginRequest.username(), 
+                    loginRequest.password()
+                ))
+                .flatMap(token -> ServerResponse.ok().bodyValue(token));
     }
 
     public Mono<ServerResponse> registroUsuario(ServerRequest serverRequest) {
@@ -37,17 +39,14 @@ public class Handler {
                     );
                 })
                 .map(usuario -> new UsuarioResponse(usuario.getName(), usuario.getEmail()))
-                .flatMap(response -> ServerResponse.created(null).bodyValue(response))
-                .onErrorResume(e -> ServerResponse.badRequest().bodyValue(e.getMessage()));
+                .flatMap(response -> ServerResponse.created(null).bodyValue(response));
     }
 
     public Mono<ServerResponse> listenGETOtherUseCase(ServerRequest serverRequest) {
-        // useCase2.logic();
         return ServerResponse.ok().bodyValue("");
     }
 
     public Mono<ServerResponse> listenPOSTUseCase(ServerRequest serverRequest) {
-        // useCase.logic();
         return ServerResponse.ok().bodyValue("");
     }
 }

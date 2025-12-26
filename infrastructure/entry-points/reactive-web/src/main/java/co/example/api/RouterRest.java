@@ -1,5 +1,6 @@
 package co.example.api;
 
+import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.server.RouterFunction;
@@ -11,6 +12,12 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 
 @Configuration
 public class RouterRest {
+
+    @Bean
+    public WebProperties.Resources resources() {
+        return new WebProperties.Resources();
+    }
+
     @Bean
     public RouterFunction<ServerResponse> routerFunction(Handler handler) {
         return route(POST("/login"), handler::loginUsuario)
